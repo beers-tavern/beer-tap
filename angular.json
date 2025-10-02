@@ -34,7 +34,14 @@
             }
           },
           "configurations": {
-            "production": {
+            "prod": {
+               "fileReplacements": [
+                  {
+                    "replace": "src/environments/environment.ts",
+                    "with": "src/environments/environment.prod.ts"
+                  }
+                ],
+              "optimization": true,
               "budgets": [
                 {
                   "type": "initial",
@@ -49,25 +56,31 @@
               ],
               "outputHashing": "all"
             },
-            "development": {
+            "dev": {
+              "fileReplacements": [
+                  {
+                    "replace": "src/environments/environment.ts",
+                    "with": "src/environments/environment.dev.ts"
+                  }
+              ],
               "optimization": false,
               "extractLicenses": false,
               "sourceMap": true
             }
           },
-          "defaultConfiguration": "production"
+          "defaultConfiguration": "prod"
         },
         "serve": {
           "builder": "@angular/build:dev-server",
           "configurations": {
-            "production": {
-              "buildTarget": "beer_tap:build:production"
+            "prod": {
+              "buildTarget": "beer_tap:build:prod"
             },
-            "development": {
-              "buildTarget": "beer_tap:build:development"
+            "dev": {
+              "buildTarget": "beer_tap:build:dev"
             }
           },
-          "defaultConfiguration": "development"
+          "defaultConfiguration": "dev"
         },
         "extract-i18n": {
           "builder": "@angular/build:extract-i18n"
