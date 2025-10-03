@@ -8,6 +8,8 @@ npm install -g @angular/cli
 Pour android et ios:
 ```sh
 npm install @capacitor/core @capacitor/cli @capacitor/android @capacitor/ios
+npx cap add android
+npx cap add ios
 export CAPACITOR_ANDROID_STUDIO_PATH=/usr/local/bin/android-studio # set le path de android studio
 ```
 
@@ -39,8 +41,8 @@ ng test --no-watch --no-progress --browsers=ChromeHeadless
 
 Pour compiler en android et/ou ios:
 ```sh
-npx cap add android
-npx cap add ios
+npx cap copy android
+npx cap copy ios
 ```
 
 Pour lancer sur android studio et/ou xcode:
