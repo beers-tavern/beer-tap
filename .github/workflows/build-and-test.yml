@@ -2,12 +2,13 @@ name: Build and Test Angular App
 
 on:
   push:
-    branches: [ main ]
+    branches: [ "main" ]
   pull_request:
+    branches: [ "main" ]
 
 jobs:
   build-and-test:
-    name: Build & Test
+    name: Build and test
     runs-on: ubuntu-latest
 
     steps:
@@ -23,7 +24,7 @@ jobs:
         run: npm ci
 
       - name: Run tests
-        run: npm test -- --watch=false --browsers=ChromeHeadless
+        run: npm test -- --no-watch --no-progress --browsers=ChromeHeadless
 
       - name: Build Angular app
         run: npm run build -- --configuration prod
