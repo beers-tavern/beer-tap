@@ -1,52 +1,11 @@
-## Setup l'environnement de dev
 
-Pour angular:
-```sh
-npm install -g @angular/cli
-```
+  # beers tavern (Community)
 
-Pour android et ios:
-```sh
-npm install @capacitor/core @capacitor/cli @capacitor/android @capacitor/ios
-npx cap add android
-npx cap add ios
-export CAPACITOR_ANDROID_STUDIO_PATH=/usr/local/bin/android-studio # set le path de android studio
-```
+  This is a code bundle for beers tavern (Community). The original project is available at https://www.figma.com/design/9DZZIeNCmWHTw6UIRpjsG4/beers-tavern--Community-.
 
-## Build et run
+  ## Running the code
 
-### Serve en dev (par défaut)
-```sh
-ng serve
-```
+  Run `npm i` to install the dependencies.
 
-### Build en production
-```sh
-ng build --configuration=prod
-```
-
-## Tests
-
-Pour lancer les tests:
-```sh
-ng test
-```
-
-Sans browser:
-```sh
-ng test --no-watch --no-progress --browsers=ChromeHeadless
-```
-
-## Android et iOS
-
-Pour compiler en android et/ou ios:
-```sh
-npx cap copy android
-npx cap copy ios
-```
-
-Pour lancer sur android studio et/ou xcode:
-```sh
-npx cap open android
-npx cap open ios
-```
+  Run `npm run dev` to start the development server.
+  
