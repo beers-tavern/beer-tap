@@ -1,0 +1,3 @@
+#map-page-content-container {
+  height: calc(100vh - var(--header-height));
+}

@@ -1,0 +1,23 @@
+<div class="map-container">
+    <div id="map"></div>
+
+    @if (selected_bar()) {
+    <div class="info-card h-[20%]" (click)="closeInfo()">
+      <div class="info-content" (click)="$event.stopPropagation()">
+        <button class="close-btn" (click)="closeInfo()">×</button>
+        <img [src]="selected_bar()?.image" [alt]="selected_bar()?.name" class="info-image" />
+        <div class="info-details">
+          <h3>{{ selected_bar()?.name }}</h3>
+          <p class="category">{{ selected_bar()?.category }}</p>
+          <div class="info-meta">
+            <span class="rating">⭐ {{ selected_bar()?.rating }}</span>
+            <span [class]="'status ' + (selected_bar()?.status === 'Ouvert' ? 'open' : 'closed')">
+              {{ selected_bar()?.status }}
+            </span>
+          </div>
+          <p class="address">📍 {{ selected_bar()?.address }}</p>
+        </div>
+      </div>
+    </div>
+    }
+  </div>

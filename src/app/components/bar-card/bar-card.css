@@ -1,0 +1,103 @@
+.bar-card {
+  background-color: #1f1f1f;
+  padding: 0;
+  overflow: hidden;
+  border-radius: 0px;
+}
+
+.bar-card .selected {
+  background-color: color-mix(in srgb, oklch(0.769 0.188 70.08) 10%, transparent);
+}
+
+.card-content {
+  display: flex;
+  gap: 12px;
+  padding: 12px;
+}
+
+.bar-image {
+  width: 96px;
+  height: 96px;
+  border-radius: 8px;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.bar-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.bar-header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.bar-name {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.bar-rating {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.star-icon {
+  color: #f59e0b;
+  font-size: 18px;
+  width: 18px;
+  height: 18px;
+}
+
+.bar-category {
+  margin: 0;
+  font-size: 13px;
+  color: #9ca3af;
+}
+
+.bar-details {
+  display: flex;
+  gap: 12px;
+  margin-top: 4px;
+}
+
+.detail-item {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 13px;
+}
+
+.small-icon {
+  font-size: 16px;
+  width: 16px;
+  height: 16px;
+  color: #9ca3af;
+}
+
+.status {
+  font-weight: 500;
+}
+
+.status-ouvert {
+  color: #10b981;
+}
+
+.status-fermé {
+  color: #ef4444;
+}
+
+.bar-address {
+  margin: 0;
+  font-size: 12px;
+  color: #6b7280;
+  margin-top: 2px;
+}

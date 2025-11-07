@@ -1,3 +1,6 @@
 import { Routes } from '@angular/router';
+import { MapPageComponent } from './pages/map/map';
 
-export const routes: Routes = [];
+const routes: Routes = [{ path: 'map', component: MapPageComponent }];
+
+export default routes;

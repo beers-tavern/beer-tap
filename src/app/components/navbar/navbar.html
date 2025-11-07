@@ -1,0 +1,17 @@
+<div class="container bg-[#1f1f1f] border border-gray-800 overflow-scroll">
+    <mat-form-field class="search-field" appearance="outline">
+        <mat-icon matPrefix>search</mat-icon>
+        <input matInput placeholder="Rechercher un bar..." (input)="update_search.emit($event.target.value)" />
+    </mat-form-field>
+  
+    <div class="results-count">
+        <mat-icon>location_on</mat-icon>
+        <span>{{ bars.length }} bars trouvés</span>
+    </div>
+  
+    <div class="bar-list">
+        @for (bar of bars; track $index) {
+            <app-bar-card [bar]="bar" (select_bar)="update_selected_bar($event)" [selected]="selected === bar"></app-bar-card>
+        }
+    </div>
+</div>

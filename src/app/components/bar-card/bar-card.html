@@ -1,0 +1,32 @@
+<mat-card class="bar-card">
+  <div class="card-content border border-gray-800" [class]="selected ? 'selected' : ''" (click)="select_bar.emit(bar)">
+    <img [src]="bar.image" [alt]="bar.name" class="bar-image" />
+
+    <div class="bar-info">
+      <div class="bar-header">
+        <h3 class="bar-name">{{ bar.name }}</h3>
+        <div class="bar-rating">
+          <mat-icon class="star-icon">star</mat-icon>
+          <span>{{ bar.rating }}</span>
+        </div>
+      </div>
+
+      <p class="bar-category">{{ bar.category }}</p>
+
+      <div class="bar-details">
+        <div class="detail-item">
+          <mat-icon class="small-icon">location_on</mat-icon>
+          <span>{{ bar.distance }} km</span>
+        </div>
+        <div class="detail-item">
+          <mat-icon class="small-icon">schedule</mat-icon>
+          <span [class]="'status status-' + bar.status.toLowerCase()">
+            {{ bar.status }}
+          </span>
+        </div>
+      </div>
+
+      <p class="bar-address">{{ bar.address }}</p>
+    </div>
+  </div>
+</mat-card>
