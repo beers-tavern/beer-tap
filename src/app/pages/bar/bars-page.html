@@ -1,7 +1,7 @@
 <div class="flex flex-col h-[100vh] overflow-hidden">
   <app-header></app-header>
 
-  <div class="flex overflow-hidden bg-[#1f1f1f] border border-gray-800">
+  <div class="flex overflow-hidden bg-[var(--app-bg)] border border-gray-800">
     <app-navbar
       class="overflow-y-auto flex-1"
       [search]="bar_filter()"
@@ -10,6 +10,6 @@
       [bars]="filtered_bars()"
       (select_bar)="select_bar($event)"
     ></app-navbar>
-    <app-bar-map class="flex-2"  [selected_bar]="selected_bar" (select_bar)="select_bar($event)" [bars]="filtered_bars"></app-bar-map>
+    <app-bar-map class="flex-3 h-[100%]"  [selected_bar]="selected_bar" (select_bar)="select_bar($event)" [bars]="filtered_bars"></app-bar-map>
   </div>
 </div>

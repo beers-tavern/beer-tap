@@ -1,8 +1,13 @@
 .bar-card {
-  background-color: #1f1f1f;
+  background-color: var(--app-bg);
   padding: 0;
   overflow: hidden;
   border-radius: 0px;
+}
+
+.bar-card:hover {
+  background-color: #1f1f1f;
+  transition: 0.1s;
 }
 
 .bar-card .selected {

@@ -2,8 +2,8 @@
     <div id="map"></div>
 
     @if (selected_bar()) {
-    <div class="info-card h-[20%]" (click)="closeInfo()">
-      <div class="info-content" (click)="$event.stopPropagation()">
+    <div class="info-card">
+      <div class="info-content cursor-pointer" (click)="openBarDialog()">
         <button class="close-btn" (click)="closeInfo()">×</button>
         <img [src]="selected_bar()?.image" [alt]="selected_bar()?.name" class="info-image" />
         <div class="info-details">

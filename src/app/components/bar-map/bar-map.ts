@@ -15,6 +15,8 @@ import {
 } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { LocalisationService } from '../../services/localisation-service';
+import { MatDialog } from '@angular/material/dialog';
+import { BarDialog } from '../bar-dialog/bar-dialog';
 
 @Component({
   selector: 'app-bar-map',
@@ -25,13 +27,12 @@ import { LocalisationService } from '../../services/localisation-service';
 })
 export class BarMapComponent implements AfterViewInit, OnDestroy {
   @Input() bars!: Signal<Bar[]>;
-  // @Input() height: string = '100vh';
-  // @Input() width: string = '100%';
   @Input() selected_bar!: Signal<Bar | undefined>;
 
   @Output() select_bar = new EventEmitter<Bar>();
 
   private loc = inject(LocalisationService);
+  readonly dialog = inject(MatDialog);
 
   private map: any;
   private markers: any[] = [];
@@ -160,5 +161,15 @@ export class BarMapComponent implements AfterViewInit, OnDestroy {
 
   closeInfo() {
     this.select_bar.emit(undefined);
+  }
+
+  openBarDialog(): void {
+    const dialogRef = this.dialog.open(BarDialog, {
+      data: this.selected_bar(),
+      width: '70vw',
+      maxWidth: '1200px',
+      height: '70vh',
+      maxHeight: '95vh',
+    });
   }
 }

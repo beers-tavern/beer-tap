@@ -1,0 +1,25 @@
+.bar-info-container {
+  width: 80%;
+  height: 200px;
+  background-color: #1f1f1f;
+  border: 1px solid var(--color-gray-800);
+  border-radius: 10px;
+}
+
+.location-icon {
+  /* border: 1px solid #edaf05; */
+  fill: #edaf05;
+  outline-color: #edaf05;
+}
+
+.bar-title-container {
+  display: flex;
+  align-items: center;
+  margin: 10px;
+}
+
+.bar-info-text {
+  color: white;
+  font-size: var(--text-lg);
+  line-height: var(--text-lg--line-height);
+}

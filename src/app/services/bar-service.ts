@@ -1,5 +1,18 @@
 import { Injectable } from '@angular/core';
 
+const imageMap: Record<string, string> = {
+  'craft-beer-bar':
+    'https://images.unsplash.com/photo-1649798584143-11549c12a7ea?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjcmFmdCUyMGJlZXIlMjBiYXJ8ZW58MXx8fHwxNzYxNTgxNTQ0fDA&ixlib=rb-4.1.0&q=80&w=1080',
+  'modern-bar':
+    'https://images.unsplash.com/photo-1760982192590-de2b005bb4d5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtb2Rlcm4lMjBiYXIlMjBpbnRlcmlvcnxlbnwxfHx8fDE3NjE1Nzk0MDJ8MA&ixlib=rb-4.1.0&q=80&w=1080',
+  'tavern-interior':
+    'https://images.unsplash.com/photo-1656758073866-e12c8d8de36c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx0YXZlcm4lMjBwdWJ8ZW58MXx8fHwxNzYxNTgxNTQ1fDA&ixlib=rb-4.1.0&q=80&w=1080',
+  'brewery-pub':
+    'https://images.unsplash.com/photo-1721412181600-0d05cb6c46d4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxicmV3ZXJ5JTIwcHVifGVufDF8fHx8MTc2MTU4MTU0NXww&ixlib=rb-4.1.0&q=80&w=1080',
+  'traditional-bar':
+    'https://images.unsplash.com/photo-1578174532946-fa6e6d86c763?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx0cmFkaXRpb25hbCUyMGJhcnxlbnwxfHx8fDE3NjE1ODE1NDV8MA&ixlib=rb-4.1.0&q=80&w=1080',
+};
+
 @Injectable({
   providedIn: 'root',
 })

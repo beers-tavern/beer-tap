@@ -3,14 +3,25 @@ import { BarService } from '../../services/bar-service';
 import { Navbar } from '../../components/navbar/navbar';
 import { BarMapComponent } from '../../components/bar-map/bar-map';
 import { Header } from '../../components/header/header';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { FormsModule } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
-  selector: 'app-map',
-  templateUrl: './map.html',
-  imports: [BarMapComponent, Header, Navbar],
-  styleUrl: './map.css',
+  selector: 'app-bars-page',
+  templateUrl: './bars-page.html',
+  imports: [
+    BarMapComponent,
+    Header,
+    Navbar,
+    MatFormFieldModule,
+    MatInputModule,
+    FormsModule,
+    MatButtonModule,
+  ],
 })
-export class MapPageComponent {
+export class BarsPage {
   private barService = inject(BarService);
 
   bars = this.barService.get_all_bars();
