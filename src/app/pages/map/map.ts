@@ -7,7 +7,7 @@ import { Header } from '../../components/header/header';
 @Component({
   selector: 'app-map',
   templateUrl: './map.html',
-  imports: [Navbar, BarMapComponent, Header],
+  imports: [BarMapComponent, Header, Navbar],
   styleUrl: './map.css',
 })
 export class MapPageComponent {

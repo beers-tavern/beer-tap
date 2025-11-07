@@ -25,8 +25,8 @@ import { LocalisationService } from '../../services/localisation-service';
 })
 export class BarMapComponent implements AfterViewInit, OnDestroy {
   @Input() bars!: Signal<Bar[]>;
-  @Input() height: string = '100vh';
-  @Input() width: string = '100%';
+  // @Input() height: string = '100vh';
+  // @Input() width: string = '100%';
   @Input() selected_bar!: Signal<Bar | undefined>;
 
   @Output() select_bar = new EventEmitter<Bar>();

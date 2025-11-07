@@ -1,19 +1,15 @@
-<div class="flex flex-col overflow-hidden">
-    <app-header></app-header>
-  
-    <div id="map-page-content-container" class="flex">
-      <div class="w-[25vw]">
-        <app-navbar
-          [search]="bar_filter()"
-          (update_search)="bar_filter.set($event)"
-          [selected]="selected_bar()"
-          [bars]="filtered_bars()"
-          (select_bar)="select_bar($event)"
-        ></app-navbar>
-      </div>
-  
-      <div class="w-[75vw]">
-        <app-bar-map [selected_bar]="selected_bar" (select_bar)="select_bar($event)" [bars]="filtered_bars"></app-bar-map>
-      </div>
-    </div>
+<div class="flex flex-col h-[100vh] overflow-hidden">
+  <app-header></app-header>
+
+  <div class="flex overflow-hidden bg-[#1f1f1f] border border-gray-800">
+    <app-navbar
+      class="overflow-y-auto flex-1"
+      [search]="bar_filter()"
+      (update_search)="bar_filter.set($event)"
+      [selected]="selected_bar()"
+      [bars]="filtered_bars()"
+      (select_bar)="select_bar($event)"
+    ></app-navbar>
+    <app-bar-map class="flex-2"  [selected_bar]="selected_bar" (select_bar)="select_bar($event)" [bars]="filtered_bars"></app-bar-map>
   </div>
+</div>
