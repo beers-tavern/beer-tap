@@ -9,7 +9,7 @@
         <span>{{ bars.length }} bars trouvés</span>
     </div>
   
-    <div class="bar-list overflow-y-scroll">
+    <div class="bar-list">
         @for (bar of bars; track $index) {
             <app-bar-card [bar]="bar" (select_bar)="update_selected_bar($event)" [selected]="selected === bar"></app-bar-card>
         }

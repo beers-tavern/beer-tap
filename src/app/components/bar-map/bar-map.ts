@@ -129,7 +129,7 @@ export class BarMapComponent implements AfterViewInit, OnDestroy {
           left: 50%;
           transform: translateX(-50%);
           background: white;
-          color: #1a1a1a;
+          color: var(--app-black);
           padding: 2px 8px;
           border-radius: 8px;
           font-size: 12px;
@@ -166,9 +166,9 @@ export class BarMapComponent implements AfterViewInit, OnDestroy {
   openBarDialog(): void {
     const dialogRef = this.dialog.open(BarDialog, {
       data: this.selected_bar(),
-      width: '70vw',
+      width: '50vw',
       maxWidth: '1200px',
-      height: '70vh',
+      height: '90vh',
       maxHeight: '95vh',
     });
   }
