@@ -39,7 +39,7 @@ export class BarsPage {
     this.bar_filter.set(target.value);
   }
 
-  select_bar(bar: Bar) {
+  select_bar(bar: Bar | undefined) {
     this.selected_bar.set(bar);
   }
 }

@@ -31,6 +31,8 @@ export class BarMapComponent implements AfterViewInit, OnDestroy {
 
   @Output() select_bar = new EventEmitter<Bar>();
 
+  opened = signal(false);
+
   private loc = inject(LocalisationService);
   readonly dialog = inject(MatDialog);
 
@@ -56,6 +58,7 @@ export class BarMapComponent implements AfterViewInit, OnDestroy {
     effect(() => {
       const bar = this.selected_bar?.();
       if (this.map && bar) {
+        this.opened.set(true);
         this.map.setView([bar.lat, bar.lng], this.map.getZoom(), { animate: true });
       }
     });
@@ -152,6 +155,7 @@ export class BarMapComponent implements AfterViewInit, OnDestroy {
   }
 
   onMarkerClick(bar: Bar) {
+    this.opened.set(true);
     this.select_bar.emit(bar);
 
     if (this.map) {
@@ -160,16 +164,19 @@ export class BarMapComponent implements AfterViewInit, OnDestroy {
   }
 
   closeInfo() {
+    this.opened.set(false);
     this.select_bar.emit(undefined);
   }
 
   openBarDialog(): void {
-    const dialogRef = this.dialog.open(BarDialog, {
-      data: this.selected_bar(),
-      width: '50vw',
-      maxWidth: '1200px',
-      height: '90vh',
-      maxHeight: '95vh',
-    });
+    if (this.opened()) {
+      const dialogRef = this.dialog.open(BarDialog, {
+        data: this.selected_bar(),
+        width: '50vw',
+        maxWidth: '1200px',
+        height: '90vh',
+        maxHeight: '95vh',
+      });
+    }
   }
 }
