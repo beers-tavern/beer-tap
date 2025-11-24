@@ -1,4 +1,5 @@
-<header class="bg-[var(--app-bg)] border border-gray-800 text-white px-6 py-5 flex items-center">
+<header class="bg-[var(--app-bg)] border border-gray-800 text-white px-6 py-5 flex items-center justify-between">
+  <!-- Section gauche avec l'icône et le texte -->
   <div class="flex items-center space-x-3">
     <div class="bg-amber-500 p-2 rounded-lg flex items-center justify-center">
       <img src="./assets/beer-icon.svg" alt="Beer logo" class="w-6 h-6" />
@@ -10,4 +11,11 @@
       </p>
     </div>
   </div>
+
+  <!-- Bouton carré avec des bords arrondis -->
+  <button
+    class="bg-amber-500 p-3 rounded-lg flex items-center justify-center hover:bg-amber-600 transition"
+    aria-label="Ajouter">
+    <img src="./assets/plus-icon.svg" alt="Ajouter" class="w-5 h-5" />
+  </button>
 </header>
