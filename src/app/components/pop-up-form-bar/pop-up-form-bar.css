@@ -1,0 +1,71 @@
+.popup-form {
+  background-color: var(--app-bg); /* Fond défini globalement */
+  color: var(--primary-text-color);
+  padding: 20px; /* Marges internes */
+  border-radius: 10px; /* Coins arrondis */
+  width: 500px;
+  height: 600px;
+  margin: auto;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.popup-form h2 {
+  text-align: center;
+  color: var(--primary-text-color);
+  margin-bottom: 16px;
+}
+
+.form-group {
+  margin-bottom: 16px;
+}
+
+.form-group label {
+  font-size: 14px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.8);
+  display: block;
+  margin-bottom: 4px;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  background: #f6f7f9;
+  box-sizing: border-box;
+}
+
+.form-group input:focus {
+  box-shadow: 0 0 5px rgba(255, 204, 0, 0.8);
+  outline: none;
+  border-color: #ffcc00;
+}
+
+.status-label,
+.mat-slide-toggle-content {
+  display: inline-flex;
+  align-items: center;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.87);
+}
+
+.actions {
+  text-align: center;
+}
+
+.actions button {
+  font-size: 15px;
+  font-weight: bold;
+  padding: 12px 18px;
+  border: none;
+  background-color: #ffcc00;
+  color: #000;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.actions button:hover {
+  background-color: #ffb700;
+}

@@ -1,0 +1,54 @@
+<div class="popup-form bg-[var(--app-bg)] text-white rounded-lg shadow-lg">
+  <h2 class="text-xl font-medium !text-gray-400 mb-4">Ajouter un bar</h2>
+
+  <form [formGroup]="barForm" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <label class="text-sm font-medium text-gray-400" for="name">Nom</label>
+      <input id="name" matInput formControlName="name" placeholder="Nom du bar" class="w-full text-black rounded-md" />
+      <small class="text-red-400" *ngIf="barForm.get('name')?.touched && barForm.get('name')?.invalid">
+        Le nom est requis et doit comporter 50 caractères max.
+      </small>
+    </div>
+
+    <div class="form-group mt-4">
+      <label class="text-sm font-medium text-gray-400" for="category">Catégorie</label>
+      <input id="category" matInput formControlName="category" placeholder="Catégorie du bar" class="w-full text-black rounded-md" />
+      <small class="text-red-400" *ngIf="barForm.get('category')?.touched && barForm.get('category')?.invalid">
+        La catégorie est requise.
+      </small>
+    </div>
+
+    <div class="form-group mt-4 flex items-center space-x-3">
+      <label class="status-label text-sm text-gray-400">Statut</label>
+      <mat-slide-toggle
+        class="rounded-lg "
+        [checked]="barForm.get('status')?.value === 'Ouvert'"
+        (change)="onStatusToggle($event.checked)">
+        {{ barForm.get('status')?.value === 'Ouvert' ? 'Ouvert' : 'Fermé' }}
+      </mat-slide-toggle>
+    </div>
+
+    <div class="form-group mt-4">
+      <label class="text-sm font-medium text-gray-400" for="address">Adresse</label>
+      <input id="address" matInput formControlName="address" placeholder="Adresse du bar" class="w-full text-black rounded-md" />
+    </div>
+
+    <div class="grid grid-cols-2 gap-4 mt-4">
+      <div class="form-group">
+        <label class="text-sm font-medium text-gray-400" for="lat">Latitude</label>
+        <input id="lat" matInput type="number" formControlName="lat" placeholder="Latitude" class="w-full text-black rounded-md" />
+      </div>
+
+      <div class="form-group">
+        <label class="text-sm font-medium text-gray-400" for="lng">Longitude</label>
+        <input id="lng" matInput type="number" formControlName="lng" placeholder="Longitude" class="w-full text-black rounded-md" />
+      </div>
+    </div>
+
+    <div class="actions mt-6">
+      <button mat-raised-button color="primary" type="submit" class="px-6 py-2 bg-amber-500 rounded-md text-white hover:bg-amber-600" [disabled]="barForm.invalid">
+        Ajouter
+      </button>
+    </div>
+  </form>
+</div>

@@ -52,4 +52,22 @@ export class BarsPage {
         this.selected_bar.set(undefined);
     }
   }
+
+  addBar(newBar: Partial<Bar>) {
+    const current = this.bars();
+    const maxId = current.reduce((m, b) => Math.max(m, b.id), 0);
+    const barToAdd: Bar = {
+      id: maxId + 1,
+      name: newBar.name ?? 'Sans nom',
+      category: newBar.category ?? '',
+      rating: (newBar as any).rating ?? 0,
+      distance: (newBar as any).distance ?? 0,
+      status: (newBar.status as 'Ouvert' | 'Fermé') ?? 'Ouvert',
+      address: newBar.address ?? '',
+      image: newBar.image ?? '',
+      lat: newBar.lat ?? 0,
+      lng: newBar.lng ?? 0,
+    };
+    this.bars.set([...current, barToAdd]);
+  }
 }
