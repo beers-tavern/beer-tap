@@ -1,4 +1,4 @@
-import { Component, inject, model } from '@angular/core';
+import { Component, EventEmitter, Output, inject, model } from '@angular/core';
 import { BarMapComponent } from '../bar-map/bar-map';
 
 import {
@@ -33,5 +33,9 @@ export class BarDialog {
 
   onClose(): void {
     this.dialogRef.close();
+  }
+
+  deleteBar() {
+    this.dialogRef.close(this.bar());
   }
 }

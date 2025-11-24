@@ -24,14 +24,14 @@ import { MatButtonModule } from '@angular/material/button';
 export class BarsPage {
   private barService = inject(BarService);
 
-  bars = this.barService.get_all_bars();
+  bars = this.barService.get_all_bars_signal();
 
   bar_filter = signal('');
 
   selected_bar: WritableSignal<Bar | undefined> = signal(undefined);
 
   filtered_bars = computed(() =>
-    this.bars.filter((bar) => bar.name.toLowerCase().startsWith(this.bar_filter().toLowerCase()))
+    this.bars().filter((bar) => bar.name.toLowerCase().startsWith(this.bar_filter().toLowerCase()))
   );
 
   update_bar_filter(event: Event) {
@@ -41,5 +41,15 @@ export class BarsPage {
 
   select_bar(bar: Bar | undefined) {
     this.selected_bar.set(bar);
+  }
+
+  delete_bar(barToDelete: Bar | undefined) {
+    console.log(barToDelete);
+    const updatedBars = this.bars().filter((bar) => bar.id !== barToDelete?.id);
+    this.bars.set(updatedBars);
+
+    if (this.selected_bar() === barToDelete) {
+        this.selected_bar.set(undefined);
+    }
   }
 }

@@ -30,6 +30,7 @@ export class BarMapComponent implements AfterViewInit, OnDestroy {
   @Input() selected_bar!: Signal<Bar | undefined>;
 
   @Output() select_bar = new EventEmitter<Bar>();
+  @Output() delete_bar = new EventEmitter<Bar>();
 
   opened = signal(false);
 
@@ -176,6 +177,12 @@ export class BarMapComponent implements AfterViewInit, OnDestroy {
         maxWidth: '1200px',
         height: '90vh',
         maxHeight: '95vh',
+      });
+
+      dialogRef.afterClosed().subscribe((result: Bar | undefined) => {
+        if (result) {
+          this.delete_bar.emit(result);
+        }
       });
     }
   }
