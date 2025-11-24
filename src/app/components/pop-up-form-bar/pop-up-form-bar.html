@@ -1,5 +1,10 @@
 <div class="popup-form bg-[var(--app-bg)] text-white rounded-lg shadow-lg">
-  <h2 class="text-xl font-medium !text-gray-400 mb-4">Ajouter un bar</h2>
+  @if(this.data.modifyMode){
+    <h2 class="text-xl font-medium !text-gray-400 mb-4">{{this.data.modifyMode ? "Modifier un bar" : "Ajouter un bar"}}</h2>
+  } @else {
+    <h2 class="text-xl font-medium !text-gray-400 mb-4">Ajouter un bar</h2>
+  }
+  
 
   <form [formGroup]="barForm" (ngSubmit)="onSubmit()">
     <div class="form-group">
@@ -47,7 +52,7 @@
 
     <div class="actions mt-6">
       <button mat-raised-button color="primary" type="submit" class="px-6 py-2 bg-amber-500 rounded-md text-white hover:bg-amber-600" [disabled]="barForm.invalid">
-        Ajouter
+        {{this.data.modifyMode ? "Modifier" : "Ajouter"}}
       </button>
     </div>
   </form>

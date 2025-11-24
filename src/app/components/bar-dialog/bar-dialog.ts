@@ -3,6 +3,7 @@ import { BarMapComponent } from '../bar-map/bar-map';
 
 import {
   MAT_DIALOG_DATA,
+  MatDialog,
   MatDialogActions,
   MatDialogClose,
   MatDialogContent,
@@ -18,6 +19,7 @@ import { AddressIcon } from "../icons/address-icon";
 import { TelephoneIcon } from "../icons/telephone-icon";
 import { ClockIcon } from "../icons/clock-icon";
 import { DollarIcon } from "../icons/dollar-icon";
+import { PopUpFormBarComponent } from '../pop-up-form-bar/pop-up-form-bar';
 
 @Component({
   selector: 'app-bar-dialog',
@@ -26,10 +28,13 @@ import { DollarIcon } from "../icons/dollar-icon";
   styleUrl: 'bar-dialog.css',
 })
 export class BarDialog {
+  readonly dialog = inject(MatDialog);
   readonly dialogRef = inject(MatDialogRef<BarDialog>);
 
   readonly data = inject<Bar>(MAT_DIALOG_DATA);
   readonly bar = model(this.data);
+
+  @Output() modifiedBar = new EventEmitter<Partial<Bar>>();
 
   onClose(): void {
     this.dialogRef.close();
@@ -37,5 +42,23 @@ export class BarDialog {
 
   deleteBar() {
     this.dialogRef.close(this.bar());
+  }
+
+  modifyBar() { 
+    const dialogRef = this.dialog.open(PopUpFormBarComponent, {
+      width: '500px',
+      height: '600px',
+      data : {
+        modifyMode : true,
+        bar : this.bar()
+      } as PopUpFormBarData
+    });
+    
+    dialogRef.afterClosed().subscribe((result: BarForm) => {
+      if (result) {
+        result.modifyMode = true;
+        this.dialogRef.close(result);
+      }
+    });
   }
 }

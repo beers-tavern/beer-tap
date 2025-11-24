@@ -14,11 +14,16 @@ export class Header {
   openAddBarDialog(): void {
       const dialogRef = this.dialog.open(PopUpFormBarComponent, {
         width: '500px',
-        height: '600px'
+        height: '600px',
+        data : {
+          modifyMode : false,
+          bar: null
+        } as PopUpFormBarData
       });
 
-      dialogRef.afterClosed().subscribe((result) => {
+      dialogRef.afterClosed().subscribe((result: BarForm) => {
         if (result) {
+          result.modifyMode = false;
           this.newBar.emit(result);
         }
       });

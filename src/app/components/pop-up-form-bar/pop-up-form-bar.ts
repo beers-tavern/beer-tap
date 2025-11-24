@@ -1,4 +1,4 @@
-import { Component, EventEmitter, inject, Output } from '@angular/core';
+import { Component, EventEmitter, inject, OnInit, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatFormFieldModule } from "@angular/material/form-field";
@@ -7,7 +7,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { ReactiveFormsModule } from '@angular/forms';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-pop-up-form-bar',
@@ -23,8 +23,10 @@ import { MatDialogRef } from '@angular/material/dialog';
     ReactiveFormsModule
   ]
 })
-export class PopUpFormBarComponent {
+export class PopUpFormBarComponent implements OnInit{
   readonly dialogRef = inject(MatDialogRef<PopUpFormBarComponent>);
+
+  readonly data = inject<PopUpFormBarData>(MAT_DIALOG_DATA);
 
   barForm: FormGroup;
 
@@ -39,6 +41,13 @@ export class PopUpFormBarComponent {
     });
   }
 
+  ngOnInit(): void {
+    if (this.data && this.data.bar) {
+      this.barForm.patchValue(this.data.bar);
+    }
+  }
+
+
   onStatusToggle(checked: boolean): void {
     this.barForm.patchValue({ status: checked ? 'Ouvert' : 'Fermé' });
   }
@@ -46,20 +55,21 @@ export class PopUpFormBarComponent {
   onSubmit(): void {
     if (this.barForm.valid) {
       const bar = this.formMapper(this.barForm);
-      this.dialogRef.close(this.barForm.value);
+      this.dialogRef.close(bar);
       this.barForm.reset();
     }
   }
 
-  formMapper(form:FormGroup<any>): Bar {
+  formMapper(form:FormGroup<any>): BarForm {
     const value = form.value;
     return {
+      id : this.data.bar ? this.data.bar.id : undefined,
       name : value.name,
       category : value.category,
       status : value.status,
       address: value.address,
       lat : value.lat,
       lng : value.lng
-    } as Bar
+    } as BarForm
   }
 }
