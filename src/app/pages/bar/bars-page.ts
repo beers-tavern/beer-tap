@@ -1,5 +1,5 @@
 import { Component, computed, inject, signal, WritableSignal } from '@angular/core';
-import { Router, RouterLink } from '@angular/router';
+import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { BarService } from '../../services/bar-service';
 import { AuthService } from '../../services/auth.service';
@@ -18,7 +18,6 @@ import { MatButtonModule } from '@angular/material/button';
   templateUrl: './bars-page.html',
   imports: [
     CommonModule,
-    RouterLink,
     BarMapComponent,
     Header,
     Navbar,

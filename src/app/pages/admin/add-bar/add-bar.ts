@@ -1,5 +1,5 @@
 import { Component, signal } from '@angular/core';
-import { Router, RouterLink } from '@angular/router';
+import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { BarService } from '../../../services/bar-service';
@@ -8,7 +8,7 @@ import { CreateBarDto } from '../../../models/bar';
 @Component({
   selector: 'app-add-bar',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, RouterLink],
+  imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './add-bar.html',
   styleUrls: ['./add-bar.css']
 })

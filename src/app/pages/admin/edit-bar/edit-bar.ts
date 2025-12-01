@@ -1,5 +1,5 @@
 import { Component, OnInit, signal } from '@angular/core';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { BarService } from '../../../services/bar-service';
@@ -8,7 +8,7 @@ import { Bar, UpdateBarDto } from '../../../models/bar';
 @Component({
   selector: 'app-edit-bar',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, RouterLink],
+  imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './edit-bar.html',
   styleUrls: ['./edit-bar.css']
 })
