@@ -12,11 +12,45 @@
     </div>
   </div>
 
-  <!-- Bouton carré avec des bords arrondis -->
-  <button
-    class="bg-amber-500 p-3 rounded-lg flex items-center justify-center hover:bg-amber-600 transition"
-    aria-label="Ajouter"
-    (click) = "openAddBarDialog()">
-    <img src="./assets/plus-icon.svg" alt="Ajouter" class="w-5 h-5" />
-  </button>
+  <!-- Section droite avec authentification et actions -->
+  <div class="flex items-center space-x-3">
+        @if (authService.isAuthenticated()) {
+      <div class="text-sm text-right">
+        <p class="font-medium">{{ authService.user()?.name }}</p>
+        <p class="text-xs text-gray-400">
+          {{ authService.isAdmin() ? 'Administrateur' : 'Utilisateur' }}
+        </p>
+      </div>      @if (authService.isAdmin()) {
+        <button
+          class="bg-amber-500 p-3 rounded-lg flex items-center justify-center hover:bg-amber-600 transition"
+          aria-label="Ajouter un bar"
+          (click)="openAddBarDialog()"
+          title="Ajouter un bar"
+        >
+          <img src="./assets/plus-icon.svg" alt="Ajouter" class="w-5 h-5" />
+        </button>
+      }
+
+      <button
+        class="bg-red-500 p-3 rounded-lg flex items-center justify-center hover:bg-red-600 transition text-white font-medium text-sm"
+        (click)="logout()"
+        title="Se déconnecter"
+      >
+        Déconnexion
+      </button>
+    } @else {
+      <a
+        routerLink="/login"
+        class="bg-blue-500 p-3 rounded-lg flex items-center justify-center hover:bg-blue-600 transition text-white font-medium text-sm px-4"
+      >
+        Connexion
+      </a>
+      <a
+        routerLink="/register"
+        class="bg-green-500 p-3 rounded-lg flex items-center justify-center hover:bg-green-600 transition text-white font-medium text-sm px-4"
+      >
+        Inscription
+      </a>
+    }
+  </div>
 </header>

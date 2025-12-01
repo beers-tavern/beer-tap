@@ -1,4 +1,4 @@
-interface BarForm {
+export interface BarForm {
     id: number;
     name: string;
     category: string;

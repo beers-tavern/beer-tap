@@ -1,5 +1,10 @@
 import { Component, EventEmitter, Output, inject, model } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { BarMapComponent } from '../bar-map/bar-map';
+import { Bar } from '../../models/bar';
+import { PopUpFormBarData } from '../../models/pop-up-form-bar-data';
+import { BarForm } from '../../models/barForm';
+import { AuthService } from '../../services/auth.service';
 
 import {
   MAT_DIALOG_DATA,
@@ -23,13 +28,14 @@ import { PopUpFormBarComponent } from '../pop-up-form-bar/pop-up-form-bar';
 
 @Component({
   selector: 'app-bar-dialog',
-  imports: [MatFormFieldModule, MatInputModule, FormsModule, MatButtonModule, MatIconModule, AddressIcon, TelephoneIcon, ClockIcon, DollarIcon],
+  imports: [CommonModule, MatFormFieldModule, MatInputModule, FormsModule, MatButtonModule, MatIconModule, AddressIcon, TelephoneIcon, ClockIcon, DollarIcon],
   templateUrl: 'bar-dialog.html',
   styleUrl: 'bar-dialog.css',
 })
 export class BarDialog {
   readonly dialog = inject(MatDialog);
   readonly dialogRef = inject(MatDialogRef<BarDialog>);
+  readonly authService = inject(AuthService);
 
   readonly data = inject<Bar>(MAT_DIALOG_DATA);
   readonly bar = model(this.data);

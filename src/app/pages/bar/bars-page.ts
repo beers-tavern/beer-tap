@@ -1,5 +1,10 @@
 import { Component, computed, inject, signal, WritableSignal } from '@angular/core';
+import { Router, RouterLink } from '@angular/router';
+import { CommonModule } from '@angular/common';
 import { BarService } from '../../services/bar-service';
+import { AuthService } from '../../services/auth.service';
+import { Bar } from '../../models/bar';
+import { BarForm } from '../../models/barForm';
 import { Navbar } from '../../components/navbar/navbar';
 import { BarMapComponent } from '../../components/bar-map/bar-map';
 import { Header } from '../../components/header/header';
@@ -7,12 +12,13 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
-import test from 'node:test';
 
 @Component({
   selector: 'app-bars-page',
   templateUrl: './bars-page.html',
   imports: [
+    CommonModule,
+    RouterLink,
     BarMapComponent,
     Header,
     Navbar,
@@ -24,6 +30,8 @@ import test from 'node:test';
 })
 export class BarsPage {
   private barService = inject(BarService);
+  authService = inject(AuthService);
+  private router = inject(Router);
 
   bars = this.barService.get_all_bars_signal();
 
@@ -39,60 +47,80 @@ export class BarsPage {
     let target = event.target as HTMLInputElement;
     this.bar_filter.set(target.value);
   }
-
   select_bar(bar: Bar | undefined) {
     this.selected_bar.set(bar);
   }
 
   delete_bar(barToDelete: number | undefined) {
-    const updatedBars = this.bars().filter((bar) => bar.id !== barToDelete);
+    if (!this.authService.isAdmin()) {
+      alert('Accès refusé : rôle administrateur requis');
+      return;
+    }
+
+    const updatedBars = this.bars().filter((bar) => bar.id !== barToDelete?.toString());
     this.bars.set(updatedBars);
 
-    if (this.selected_bar() === barToDelete) {
-        this.selected_bar.set(undefined);
+    if (this.selected_bar()?.id === barToDelete?.toString()) {
+      this.selected_bar.set(undefined);
     }
   }
 
   modify_bar(barForm: BarForm) {
-    const barToUpdate = this.bars().find((bar) => bar.id === barForm.id);
-    const barUpdated : Bar = this.patchBarWithForm(barToUpdate, barForm);
+    if (!this.authService.isAdmin()) {
+      alert('Accès refusé : rôle administrateur requis');
+      return;
+    }
+
+    const barToUpdate = this.bars().find((bar) => bar.id === barForm.id.toString());
+    if (!barToUpdate) return;
+
+    const barUpdated: Bar = this.patchBarWithForm(barToUpdate, barForm);
 
     const updatedBars = this.bars().map((bar) =>
       bar.id === barUpdated.id ? barUpdated : bar
     );
     this.bars.set(updatedBars);
   }
-  patchBarWithForm(barToUpdate: Bar | undefined, barForm: BarForm): Bar {
-    if(barToUpdate?.name && barForm.name !== barToUpdate?.name){
-      barToUpdate.name = barForm.name;
-    } else if (barToUpdate?.category && barForm.category !== barToUpdate?.category){
-      barToUpdate.category = barForm.category;
-    } else if (barToUpdate?.status && barForm.status !== barToUpdate?.status){
-      barToUpdate.status = barForm.status;
-    } else if (barToUpdate?.address && barForm.address !== barToUpdate?.address){
-      barToUpdate.address = barForm.address;
-    } else if (barToUpdate?.lat && barForm.lat !== barToUpdate?.lat){
-      barToUpdate.lat = barForm.lat;
-    } else if (barToUpdate?.lng && barForm.lng !== barToUpdate?.lng){
-      barToUpdate.lng = barForm.lng;
-    }
-    return barToUpdate as Bar;
+
+  patchBarWithForm(barToUpdate: Bar, barForm: BarForm): Bar {
+    return {
+      ...barToUpdate,
+      name: barForm.name,
+      category: barForm.category,
+      status: barForm.status,
+      address: barForm.address,
+      lat: barForm.lat,
+      lng: barForm.lng,
+      latitude: barForm.lat,
+      longitude: barForm.lng
+    };
   }
 
   addBar(newBar: Partial<BarForm>) {
+    if (!this.authService.isAdmin()) {
+      alert('Accès refusé : rôle administrateur requis');
+      return;
+    }
+
     const current = this.bars();
-    const maxId = current.reduce((m, b) => Math.max(m, b.id), 0);
+    const maxId = current.reduce((m, b) => Math.max(m, parseInt(b.id)), 0);
     const barToAdd: Bar = {
-      id: maxId + 1,
+      id: (maxId + 1).toString(),
       name: newBar.name ?? 'Sans nom',
       category: newBar.category ?? '',
-      rating: (newBar as any).rating ?? 0,
-      distance: (newBar as any).distance ?? 0,
+      rating: 0,
+      distance: 0,
       status: (newBar.status as 'Ouvert' | 'Fermé') ?? 'Ouvert',
       address: newBar.address ?? '',
       image: '',
       lat: newBar.lat ?? 0,
       lng: newBar.lng ?? 0,
+      latitude: newBar.lat ?? 0,
+      longitude: newBar.lng ?? 0,
+      description: 'Nouveau bar',
+      phone: '+33 1 23 45 67 89',
+      openingHours: '10h-2h',
+      reviewCount: 0
     };
     this.bars.set([...current, barToAdd]);
   }

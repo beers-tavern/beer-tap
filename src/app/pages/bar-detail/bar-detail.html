@@ -1,0 +1,143 @@
+<app-header></app-header>
+
+<div class="bar-detail-container">
+  @if (isLoading()) {
+    <div class="loading">Chargement...</div>
+  }
+
+  @if (errorMessage()) {
+    <div class="error-message">
+      <p>{{ errorMessage() }}</p>
+      <button class="btn btn-primary" routerLink="/bars">
+        ← Retour à la liste
+      </button>
+    </div>
+  }
+
+  @if (bar() && !isLoading()) {
+    <div class="bar-detail-card">
+      <div class="bar-header">
+        <div class="bar-info">
+          <h1>{{ bar()!.name }}</h1>
+          <div class="bar-status" [class.open]="bar()!.status === 'Ouvert'">
+            {{ bar()!.status }}
+          </div>
+        </div>
+
+        @if (authService.isAdmin()) {
+          <div class="admin-actions">
+            <button class="btn btn-secondary" (click)="editBar()">
+              ✏️ Modifier
+            </button>
+            <button class="btn btn-danger" (click)="deleteBar()">
+              🗑️ Supprimer
+            </button>
+          </div>
+        }
+      </div>
+
+      <div class="bar-rating">
+        <div class="stars">
+          @for (star of getStars(averageRating()); track $index) {
+            <span class="star" [class.filled]="star === 1">★</span>
+          }
+        </div>
+        <span class="rating-text">
+          {{ averageRating().toFixed(1) }} / 5 ({{ reviews().length }} avis)
+        </span>
+      </div>
+
+      <div class="bar-details">
+        <div class="detail-section">
+          <h3>📍 Adresse</h3>
+          <p>{{ bar()!.address }}</p>
+        </div>
+
+        <div class="detail-section">
+          <h3>📝 Description</h3>
+          <p>{{ bar()!.description }}</p>
+        </div>
+
+        <div class="detail-row">
+          <div class="detail-section">
+            <h3>📞 Téléphone</h3>
+            <p>{{ bar()!.phone }}</p>
+          </div>
+
+          <div class="detail-section">
+            <h3>🕒 Horaires</h3>
+            <p>{{ bar()!.openingHours }}</p>
+          </div>
+        </div>
+      </div>
+
+      <hr class="divider" />
+
+      <div class="reviews-section">
+        <h2>Avis des clients</h2>
+
+        @if (authService.isAuthenticated()) {
+          <app-review-form 
+            [barId]="barId!"
+            (reviewSubmitted)="onReviewSubmitted()"
+          ></app-review-form>
+        } @else {
+          <div class="login-prompt">
+            <p>Vous devez être connecté pour laisser un avis</p>
+            <button class="btn btn-primary" routerLink="/login">
+              Se connecter
+            </button>
+          </div>
+        }
+
+        @if (reviews().length === 0) {
+          <div class="no-reviews">
+            <p>Aucun avis pour le moment. Soyez le premier à donner votre avis !</p>
+          </div>
+        } @else {
+          <div class="reviews-list">
+            @for (review of reviews(); track review.id) {
+              <div class="review-card">
+                <div class="review-header">
+                  <div class="review-author">
+                    <strong>{{ review.userName }}</strong>
+                    <div class="review-stars">
+                      @for (star of getStars(review.rating); track $index) {
+                        <span class="star" [class.filled]="star === 1">★</span>
+                      }
+                    </div>
+                  </div>
+                  <div class="review-actions">
+                    <span class="review-date">
+                      {{ review.createdAt | date: 'dd/MM/yyyy' }}
+                    </span>
+                    @if (canDeleteReview(review)) {
+                      <button 
+                        class="btn-delete-review"
+                        (click)="deleteReview(review.id)"
+                        title="Supprimer cet avis"
+                      >
+                        🗑️
+                      </button>
+                    }
+                  </div>
+                </div>
+                @if (review.comment) {
+                  <p class="review-comment">{{ review.comment }}</p>
+                }
+              </div>
+            }
+          </div>
+        }
+      </div>
+
+      <div class="back-link">
+        <button class="btn btn-secondary" routerLink="/bars">
+          ← Retour à la liste des bars
+        </button>
+      </div>
+    </div>
+  }
+</div>
+
+<app-navbar></app-navbar>
