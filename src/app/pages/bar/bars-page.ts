@@ -111,7 +111,7 @@ export class BarsPage {
       distance: 0,
       status: (newBar.status as 'Ouvert' | 'Fermé') ?? 'Ouvert',
       address: newBar.address ?? '',
-      image: '',
+      image: 'https://images.unsplash.com/photo-1514933651103-005eec06c04b?w=200&h=200&fit=crop',
       lat: newBar.lat ?? 0,
       lng: newBar.lng ?? 0,
       latitude: newBar.lat ?? 0,

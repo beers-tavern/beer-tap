@@ -85,7 +85,7 @@ export class BarService {
       reviewCount: 0,
       createdAt: new Date(),
       category: dto.category || '',
-      image: dto.image || ''
+      image: dto.image || 'https://images.unsplash.com/photo-1514933651103-005eec06c04b?w=200&h=200&fit=crop'
     };
 
     this.all_bars.push(newBar);
