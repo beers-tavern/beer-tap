@@ -125,6 +125,19 @@ export class AuthService {
       }
     };
 
+    // Charger les utilisateurs enregistrés depuis le localStorage
+    if (this.isBrowser) {
+      const registeredUsersJson = localStorage.getItem('registeredUsers');
+      if (registeredUsersJson) {
+        try {
+          const registeredUsers = JSON.parse(registeredUsersJson);
+          Object.assign(mockUsers, registeredUsers);
+        } catch (e) {
+          console.error('Erreur lors du chargement des utilisateurs:', e);
+        }
+      }
+    }
+
     const mockData = mockUsers[credentials.email];
     
     if (mockData && mockData.password === credentials.password) {
@@ -138,9 +151,24 @@ export class AuthService {
   }
 
   private mockRegister(email: string, password: string, name: string): Observable<AuthResponse> {
-    // Vérifier si l'email existe déjà (simulation simple)
+    // Vérifier si l'email existe déjà
     if (email === 'admin@beertavern.com' || email === 'user@beertavern.com') {
       return throwError(() => new Error('Cet email est déjà utilisé'));
+    }
+
+    // Vérifier dans les utilisateurs enregistrés
+    if (this.isBrowser) {
+      const registeredUsersJson = localStorage.getItem('registeredUsers');
+      if (registeredUsersJson) {
+        try {
+          const registeredUsers = JSON.parse(registeredUsersJson);
+          if (registeredUsers[email]) {
+            return throwError(() => new Error('Cet email est déjà utilisé'));
+          }
+        } catch (e) {
+          console.error('Erreur lors de la vérification:', e);
+        }
+      }
     }
 
     const newUser: User = {
@@ -150,6 +178,27 @@ export class AuthService {
       role: UserRole.USER, // Par défaut, nouvel utilisateur = USER
       createdAt: new Date()
     };
+
+    // Sauvegarder l'utilisateur dans le localStorage
+    if (this.isBrowser) {
+      const registeredUsersJson = localStorage.getItem('registeredUsers');
+      let registeredUsers: { [email: string]: { password: string; user: User } } = {};
+      
+      if (registeredUsersJson) {
+        try {
+          registeredUsers = JSON.parse(registeredUsersJson);
+        } catch (e) {
+          console.error('Erreur lors du parsing:', e);
+        }
+      }
+
+      registeredUsers[email] = {
+        password: password,
+        user: newUser
+      };
+
+      localStorage.setItem('registeredUsers', JSON.stringify(registeredUsers));
+    }
 
     return of({
       user: newUser,
