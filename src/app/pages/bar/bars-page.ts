@@ -1,3 +1,4 @@
+import { AuthService } from '../../services/auth.service';
 import { Component, computed, inject, signal, WritableSignal } from '@angular/core';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
@@ -28,11 +29,22 @@ import { MatButtonModule } from '@angular/material/button';
   ],
 })
 export class BarsPage {
+
   private barService = inject(BarService);
+<<<<<<< HEAD
   authService = inject(AuthService);
   private router = inject(Router);
+=======
+  private authService = inject(AuthService);
+
+  // آیا کاربر فعلی ادمین است؟
+  get isAdmin(): boolean {
+    return this.authService.isAdmin();
+  }
+>>>>>>> 85fe261 (Update KHA with auth & reviews)
 
   bars = this.barService.get_all_bars_signal();
+
 
   bar_filter = signal('');
 

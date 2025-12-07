@@ -15,6 +15,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatCard, MatCardModule } from '@angular/material/card';
 import { Bar } from '../../models/bar';
 
+
 @Component({
   selector: 'app-navbar',
   imports: [MatIconModule, MatFormFieldModule, MatInputModule, MatCardModule, BarCard],
@@ -22,6 +23,7 @@ import { Bar } from '../../models/bar';
   styleUrl: './navbar.css',
 })
 export class Navbar {
+  @Input() isAdmin = false;
   @Input() search!: string;
   @Input() bars!: Bar[];
   @Input() selected: Bar | undefined;

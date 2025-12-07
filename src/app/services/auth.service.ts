@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import { Injectable, signal, computed, Inject, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { Observable, of, throwError, BehaviorSubject } from 'rxjs';
@@ -41,10 +42,36 @@ export class AuthService {
         this.setCurrentUser(user);
       } catch (e) {
         this.logout();
+=======
+// src/app/services/auth.service.ts
+import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
+
+export type UserRole = 'ADMIN' | 'USER';
+
+export interface AuthUser {
+  username: string;
+  role: UserRole;
+}
+
+@Injectable({
+  providedIn: 'root',
+})
+export class AuthService {
+  private currentUser: AuthUser | null = null;
+
+  constructor(@Inject(PLATFORM_ID) private platformId: Object) {
+    // فقط وقتی در مرورگر هستیم از localStorage بخوان
+    if (this.isBrowser()) {
+      const saved = localStorage.getItem('currentUser');
+      if (saved) {
+        this.currentUser = JSON.parse(saved);
+>>>>>>> 85fe261 (Update KHA with auth & reviews)
       }
     }
   }
 
+<<<<<<< HEAD
   login(credentials: LoginCredentials): Observable<AuthResponse> {
     // Simulation d'une API - À remplacer par un vrai appel HTTP
     return this.mockLogin(credentials).pipe(
@@ -204,5 +231,54 @@ export class AuthService {
       user: newUser,
       token: 'mock-jwt-token-' + Date.now()
     });
+=======
+  private isBrowser(): boolean {
+    return isPlatformBrowser(this.platformId);
+  }
+
+  login(username: string, password: string): boolean {
+    // ⚠️ فقط برای تمرین: کاربران ثابت روی فرانت
+    if (username === 'admin' && password === 'admin123') {
+      this.setUser({ username: 'admin', role: 'ADMIN' });
+      return true;
+    }
+
+    if (username === 'user' && password === 'user123') {
+      this.setUser({ username: 'user', role: 'USER' });
+      return true;
+    }
+
+    return false;
+  }
+
+  private setUser(user: AuthUser) {
+    this.currentUser = user;
+    if (this.isBrowser()) {
+      localStorage.setItem('currentUser', JSON.stringify(user));
+    }
+  }
+
+  logout() {
+    this.currentUser = null;
+    if (this.isBrowser()) {
+      localStorage.removeItem('currentUser');
+    }
+  }
+
+  getUser(): AuthUser | null {
+    return this.currentUser;
+  }
+
+  isLoggedIn(): boolean {
+    return this.currentUser !== null;
+  }
+
+  isAdmin(): boolean {
+    return this.currentUser?.role === 'ADMIN';
+  }
+
+  getRole(): UserRole | null {
+    return this.currentUser?.role ?? null;
+>>>>>>> 85fe261 (Update KHA with auth & reviews)
   }
 }

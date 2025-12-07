@@ -1,23 +1,113 @@
 <div class="map-container">
-    <div id="map"></div>
+  <div id="map"></div>
 
-    @if (selected_bar()) {
+  @if (selected_bar()) {
     <div class="info-card">
-      <div class="info-content cursor-pointer" (click)="openBarDialog()">
-        <button class="close-btn" (click)="closeInfo()">×</button>
-        <img [src]="selected_bar()?.image" [alt]="selected_bar()?.name" class="info-image" />
+      <div
+        class="info-content cursor-pointer"
+        (click)="isAdmin && openBarDialog()"
+      >
+        <button class="close-btn" (click)="closeInfo()">X</button>
+
+        <img
+          [src]="selected_bar()?.image"
+          [alt]="selected_bar()?.name"
+          class="info-image"
+        />
+
         <div class="info-details">
           <h3>{{ selected_bar()?.name }}</h3>
           <p class="category">{{ selected_bar()?.category }}</p>
+
           <div class="info-meta">
             <span class="rating">⭐ {{ selected_bar()?.rating }}</span>
-            <span [class]="'status ' + (selected_bar()?.status === 'Ouvert' ? 'open' : 'closed')">
+            <span
+              class="status"
+              [class]="
+                'status ' + (selected_bar()?.status === 'Ouvert' ? 'open' : 'closed')
+              "
+            >
               {{ selected_bar()?.status }}
             </span>
           </div>
-          <p class="address">📍 {{ selected_bar()?.address }}</p>
+
+          <p class="address">{{ selected_bar()?.address }}</p>
         </div>
       </div>
+
+      <!-- دکمه‌های مدیریت فقط برای ADMIN -->
+      @if (isAdmin) {
+        <div class="admin-actions">
+          <button class="edit-btn" (click)="openBarDialog()">Modifier</button>
+          <button
+            class="delete-btn"
+            (click)="delete_bar.emit(selected_bar()?.id!)"
+          >
+            Supprimer
+          </button>
+        </div>
+      }
+
+      <!-- بخش Avis -->
+      <div class="reviews-section">
+        <h4 class="reviews-title">Avis des utilisateurs</h4>
+
+        @if (reviews().length === 0) {
+          <p class="reviews-empty">Aucun avis pour le moment.</p>
+        } @else {
+          <div class="reviews-list">
+            @for (rev of reviews(); track $index) {
+              <div class="review-item">
+                <div class="review-header">
+                  <span class="review-user">{{ rev.user }}</span>
+                  <span class="review-rating">{{ getStars(rev.rating) }}</span>
+                  <span class="review-date">{{ rev.date }}</span>
+                </div>
+                <p class="review-comment">{{ rev.comment }}</p>
+              </div>
+            }
+          </div>
+        }
+
+        @if (canReview) {
+          <form class="review-form" (ngSubmit)="addReview()">
+            <div class="form-row">
+              <label>Note :</label>
+              <div class="star-input">
+                <span
+                  *ngFor="let s of [1, 2, 3, 4, 5]"
+                  (click)="setRating(s)"
+                  [class.active]="s <= newRating"
+                >
+                  ★
+                </span>
+              </div>
+            </div>
+
+
+            <div class="form-row comment-row">
+              <label for="comment">Commentaire :</label>
+              <textarea
+                id="comment"
+                name="comment"
+                rows="2"
+                class="review-textarea"
+                [(ngModel)]="newComment"
+                required
+              ></textarea>
+            </div>
+
+            <button type="submit" class="btn-review">
+              Envoyer mon avis
+            </button>
+          </form>
+        } @else {
+          <p class="review-login-hint">
+            Connectez-vous en tant qu’utilisateur pour laisser un avis.
+          </p>
+        }
+      </div>
     </div>
-    }
-  </div>
+  }
+</div>
+

@@ -1,0 +1,122 @@
+<!-- src/app/pages/login/login-page.html -->
+<div class="login-wrapper">
+  <div class="login-card">
+
+    <h2>Connexion</h2>
+
+    <form (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="username">Nom d’utilisateur</label>
+        <input
+          id="username"
+          name="username"
+          type="text"
+          [(ngModel)]="username"
+          required
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="password">Mot de passe</label>
+        <input
+          id="password"
+          name="password"
+          type="password"
+          [(ngModel)]="password"
+          required
+        />
+      </div>
+
+      <button class="btn-login" type="submit">Se connecter</button>
+
+      <p *ngIf="error" class="error-msg">
+        {{ error }}
+      </p>
+    </form>
+
+    <div class="demo-info">
+      <p><strong>Admin :</strong> admin / admin123</p>
+      <p><strong>Utilisateur :</strong> user / user123</p>
+    </div>
+
+  </div>
+</div>
+
+<style>
+  .login-wrapper {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #1a1a1a;
+  }
+
+  .login-card {
+    width: 360px;
+    padding: 24px;
+    border-radius: 10px;
+    background: #2a2a2a;
+    color: #fff;
+    box-shadow: 0px 0px 20px rgba(0,0,0,0.4);
+  }
+
+  h2 {
+    margin-bottom: 20px;
+    text-align: center;
+    font-weight: 600;
+  }
+
+  .form-group {
+    margin-bottom: 16px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  label {
+    font-size: 0.9rem;
+    margin-bottom: 6px;
+  }
+
+  input {
+    padding: 10px 12px;
+    border-radius: 6px;
+    border: none;
+    background: #3a3a3a;
+    color: white;
+  }
+
+  input:focus {
+    outline: 2px solid #f0b90b;
+  }
+
+  .btn-login {
+    width: 100%;
+    padding: 10px 0;
+    background: #f0b90b;
+    border: none;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 8px;
+  }
+
+  .btn-login:hover {
+    background: #dca608;
+  }
+
+  .error-msg {
+    margin-top: 10px;
+    font-size: 0.9rem;
+    color: #ff4d4d;
+    text-align: center;
+  }
+
+  .demo-info {
+    margin-top: 18px;
+    background: #333;
+    padding: 10px 12px;
+    border-radius: 8px;
+    font-size: 0.85rem;
+  }
+</style>

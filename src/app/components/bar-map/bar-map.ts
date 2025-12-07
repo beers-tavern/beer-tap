@@ -1,50 +1,70 @@
 import {
   Component,
   Input,
-  OnInit,
   OnDestroy,
-  signal,
   AfterViewInit,
   PLATFORM_ID,
   Inject,
-  effect,
   Signal,
   inject,
   EventEmitter,
   Output,
+  signal,
+  effect,
 } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { LocalisationService } from '../../services/localisation-service';
 import { MatDialog } from '@angular/material/dialog';
 import { BarDialog } from '../bar-dialog/bar-dialog';
+<<<<<<< HEAD
 import { Bar } from '../../models/bar';
 import { BarForm } from '../../models/barForm';
+=======
+import { AuthService } from '../../services/auth.service';
+
+// مدل ساده برای avis
+interface BarReview {
+  user: string;
+  rating: number;
+  comment: string;
+  date: string;
+}
+>>>>>>> 85fe261 (Update KHA with auth & reviews)
 
 @Component({
   selector: 'app-bar-map',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './bar-map.html',
   styleUrl: './bar-map.css',
 })
 export class BarMapComponent implements AfterViewInit, OnDestroy {
+  @Input() isAdmin = false;
   @Input() bars!: Signal<Bar[]>;
   @Input() selected_bar!: Signal<Bar | undefined>;
 
-  @Output() select_bar = new EventEmitter<Bar>();
+  @Output() select_bar = new EventEmitter<Bar | undefined>();
   @Output() delete_bar = new EventEmitter<number>();
   @Output() modify_bar = new EventEmitter<BarForm>();
 
   opened = signal(false);
 
+  // avis مربوط به bar انتخاب‌شده
+  reviews = signal<BarReview[]>([]);
+  newRating = 5;
+  newComment = '';
+
   private loc = inject(LocalisationService);
   readonly dialog = inject(MatDialog);
+  private auth = inject(AuthService);
 
   private map: any;
   private markers: any[] = [];
   private L: any;
 
   constructor(@Inject(PLATFORM_ID) private platformId: Object) {
+    // وقتی لیست barها عوض شود، markerها را رفرش کن
     effect(() => {
       const bars = this.bars?.() ?? [];
       if (this.map && this.L) {
@@ -52,18 +72,32 @@ export class BarMapComponent implements AfterViewInit, OnDestroy {
       }
     });
 
+    // حرکت نقشه بر اساس موقعیت کاربر
     effect(() => {
       const pos = this.loc.position();
       if (this.map && pos) {
-        this.map.setView([pos.lat, pos.lng], this.map.getZoom(), { animate: true });
+        this.map.setView([pos.lat, pos.lng], this.map.getZoom(), {
+          animate: true,
+        });
       }
     });
 
+    // وقتی bar انتخاب‌شده عوض می‌شود
     effect(() => {
       const bar = this.selected_bar?.();
-      if (this.map && bar) {
+
+      if (bar) {
         this.opened.set(true);
-        this.map.setView([bar.lat, bar.lng], this.map.getZoom(), { animate: true });
+        if (this.map) {
+          this.map.setView([bar.lat, bar.lng], this.map.getZoom(), {
+            animate: true,
+          });
+        }
+        // avis را از خود bar (اگر وجود داشته باشد) بارگذاری کن
+        this.reviews.set(bar.reviews ?? []);
+      } else {
+        this.opened.set(false);
+        this.reviews.set([]);
       }
     });
   }
@@ -92,10 +126,13 @@ export class BarMapComponent implements AfterViewInit, OnDestroy {
       });
     }
 
-    this.L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
-      maxZoom: 19,
-      attribution: '© OpenStreetMap contributors © CARTO',
-    }).addTo(this.map);
+    this.L.tileLayer(
+      'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',
+      {
+        maxZoom: 19,
+        attribution: '© OpenStreetMap contributors © CARTO',
+      }
+    ).addTo(this.map);
 
     this.addMarkers(bars);
   }
@@ -103,7 +140,9 @@ export class BarMapComponent implements AfterViewInit, OnDestroy {
   private addMarkers(bars: Bar[]) {
     bars.forEach((bar) => {
       const icon = this.createCustomIcon(bar);
-      const marker = this.L.marker([bar.lat, bar.lng], { icon }).addTo(this.map);
+      const marker = this.L
+        .marker([bar.lat, bar.lng], { icon })
+        .addTo(this.map);
       marker.on('click', () => this.onMarkerClick(bar));
       this.markers.push(marker);
     });
@@ -163,7 +202,9 @@ export class BarMapComponent implements AfterViewInit, OnDestroy {
     this.select_bar.emit(bar);
 
     if (this.map) {
-      this.map.setView([bar.lat, bar.lng], this.map.getZoom(), { animate: true });
+      this.map.setView([bar.lat, bar.lng], this.map.getZoom(), {
+        animate: true,
+      });
     }
   }
 
@@ -183,14 +224,63 @@ export class BarMapComponent implements AfterViewInit, OnDestroy {
       });
 
       dialogRef.afterClosed().subscribe((result: BarForm | undefined) => {
+<<<<<<< HEAD
         if (result) {
           if (result.modifyMode) {
             this.modify_bar.emit(result);
           } else {
             this.delete_bar.emit(result.id);
           }
+=======
+        if (result?.modifyMode) {
+          this.modify_bar.emit(result);
+        } else if (result) {
+          this.delete_bar.emit(result.id);
+>>>>>>> 85fe261 (Update KHA with auth & reviews)
         }
       });
     }
+  }
+
+  // فقط کاربر ROLE = USER اجازه ثبت avis دارد
+  get canReview(): boolean {
+    return this.auth.getRole() === 'USER';
+  }
+
+  getStars(rating: number): string {
+    const r = Math.max(1, Math.min(5, rating)); // بین 1 و 5
+    return '★'.repeat(r) + '☆'.repeat(5 - r);
+  }
+
+  setRating(value: number): void {
+    this.newRating = value;
+  }
+
+  addReview(): void {
+    const bar = this.selected_bar?.();
+    const user = this.auth.getUser();
+
+    if (!bar || !user) return;
+    if (!this.newComment.trim()) return;
+
+    const review: BarReview = {
+      user: user.username,
+      rating: this.newRating,
+      comment: this.newComment.trim(),
+      date: new Date().toLocaleString(),
+    };
+
+    // به signal اضافه کن
+    this.reviews.update((list) => [...list, review]);
+
+    // به خود آبجکت bar هم بچسبان (برای باز شدن‌های بعدی)
+    if (!bar.reviews) {
+      bar.reviews = [];
+    }
+    bar.reviews.push(review);
+
+    // ریست فرم
+    this.newRating = 5;
+    this.newComment = '';
   }
 }

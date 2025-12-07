@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import { BarsPage } from './pages/bar/bars-page';
+<<<<<<< HEAD
 import { LoginComponent } from './pages/login/login';
 import { RegisterComponent } from './pages/register/register';
 import { BarDetailComponent } from './pages/bar-detail/bar-detail';
@@ -28,6 +29,23 @@ const routes: Routes = [
     component: EditBarComponent,
     canActivate: [adminGuard],
   },
+=======
+import { LoginPage } from './pages/login/login-page';
+import { authGuard } from './services/auth.guard';
+
+const routes: Routes = [
+  // صفحه لاگین
+  { path: 'login', component: LoginPage },
+
+  // صفحه لیست بارها (فقط برای کاربر لاگین شده)
+  { path: 'bars', component: BarsPage, canActivate: [authGuard] },
+
+  // روت اصلی → لاگین
+  { path: '', pathMatch: 'full', redirectTo: 'login' },
+
+  // هر مسیر ناشناخته → لاگین
+  { path: '**', redirectTo: 'login' },
+>>>>>>> 85fe261 (Update KHA with auth & reviews)
 ];
 
 export default routes;

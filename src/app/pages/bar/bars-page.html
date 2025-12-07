@@ -1,5 +1,7 @@
 <div class="flex flex-col h-[100vh] overflow-hidden">
-  <app-header (newBar)="addBar($event)"></app-header>
+
+  <app-header (newBar)="addBar($event)" [isAdmin]="isAdmin"></app-header>
+
 
   <div class="flex overflow-y-hidden bg-[var(--app-bg)] border border-gray-800">
     <app-navbar
@@ -9,7 +11,9 @@
       [selected]="selected_bar()"
       [bars]="filtered_bars()"
       (select_bar)="select_bar($event)"
+      [isAdmin]="isAdmin"
     ></app-navbar>
+
     <app-bar-map
       class="flex-3 h-[100%]"
       [selected_bar]="selected_bar"
@@ -17,6 +21,7 @@
       [bars]="filtered_bars"
       (delete_bar)="delete_bar($event)"
       (modify_bar)="modify_bar($event)"
+      [isAdmin]="isAdmin"
     ></app-bar-map>
   </div>
 </div>
