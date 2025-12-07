@@ -48,7 +48,8 @@
         <span class="font-medium">Bières</span>
       </a>
 
-      <a
+      @if (authService.isAuthenticated()) {
+        <a
         routerLink="/achievements"
         routerLinkActive="bg-amber-500 text-[var(--app-black)]"
         [routerLinkActiveOptions]="{ exact: false }"
@@ -60,6 +61,7 @@
         </svg>
         <span class="font-medium">Défis</span>
       </a>
+      }
     </nav>
 
     <!-- Section droite avec authentification et actions -->

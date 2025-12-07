@@ -1,0 +1,92 @@
+<div class="achievements-container">
+  <div class="achievements-header">
+    <h1 class="title">Achievements</h1>
+    <p class="subtitle">Débloquez des récompenses en explorant l'univers de la bière</p>
+    
+    <!-- Barre de progression -->
+    <div class="progress-section">
+      <div class="progress-info">
+        <span class="progress-text">{{ unlockedCount() }} / {{ totalCount() }} débloqués</span>
+        <span class="progress-percentage">{{ progressPercentage() }}%</span>
+      </div>
+      <div class="progress-bar">
+        <div class="progress-fill" [style.width.%]="progressPercentage()"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Filtres et tri -->
+  <div class="controls">
+    <div class="filters">
+      <button 
+        class="filter-btn"
+        [class.active]="selectedFilter() === 'all'"
+        (click)="setFilter('all')"
+      >
+        Tous
+      </button>
+      <button 
+        class="filter-btn"
+        [class.active]="selectedFilter() === 'unlocked'"
+        (click)="setFilter('unlocked')"
+      >
+        Débloqués
+      </button>
+      <button 
+        class="filter-btn"
+        [class.active]="selectedFilter() === 'locked'"
+        (click)="setFilter('locked')"
+      >
+        Verrouillés
+      </button>
+    </div>
+
+    <div class="sort-section">
+      <label for="sort">Trier par:</label>
+      <select id="sort" class="sort-select" (change)="setSort($any($event.target).value)">
+        <option value="default">Par défaut</option>
+        <option value="alphabetical">Alphabétique</option>
+        <option value="date">Date de déblocage</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- Grille d'achievements -->
+  <div class="achievements-grid">
+    @for (achievement of filteredAndSortedAchievements(); track achievement.id) {
+      <div class="achievement-card" [class.unlocked]="achievement.unlocked">
+        <div style="display: flex; gap: 1.5rem; flex: 1;">
+          <div class="achievement-icon">
+            <span class="icon">{{ achievement.icon }}</span>
+            @if (achievement.unlocked) {
+              <div class="unlock-badge">✓</div>
+            } @else {
+              <div class="lock-overlay">🔒</div>
+            }
+          </div>
+          
+          <div class="achievement-content">
+            <div class="achievement-header">
+              <h3 class="achievement-title">{{ achievement.title }}</h3>
+              <span class="achievement-category">
+                {{ getCategoryIcon(achievement.category) }} {{ getCategoryName(achievement.category) }}
+              </span>
+            </div>
+            
+            <p class="achievement-description">{{ achievement.description }}</p>
+            
+            @if (achievement.unlocked && achievement.unlockedAt) {
+              <div class="achievement-footer">
+                <span class="unlock-date">Débloqué le {{ formatDate(achievement.unlockedAt) }}</span>
+              </div>
+            }
+          </div>
+        </div>
+      </div>
+    } @empty {
+      <div class="no-achievements">
+        <p>Aucun achievement trouvé</p>
+      </div>
+    }
+  </div>
+</div>

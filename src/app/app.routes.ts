@@ -7,13 +7,18 @@ import { AddBarComponent } from './pages/admin/add-bar/add-bar';
 import { EditBarComponent } from './pages/admin/edit-bar/edit-bar';
 import { adminGuard } from './guards/admin.guard';
 import { BeersPageComponent } from './pages/beers/beers-page';
+import { AchievementsPageComponent } from './pages/achievements/achievements-page';
+import { authGuard } from './guards/auth.guard';
+import { HomePageComponent } from './pages/home/home-page';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'bars', pathMatch: 'full' },
+  { path: '', component: HomePageComponent },
+  // { path: '', redirectTo: 'bars', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'bars', component: BarsPage },
   { path: 'beers', component: BeersPageComponent },
+  { path: 'achievements', component: AchievementsPageComponent, canActivate: [authGuard] },
   {
     path: 'bars/:id',
     component: BarDetailComponent,
