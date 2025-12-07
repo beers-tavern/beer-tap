@@ -17,6 +17,8 @@ import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { LocalisationService } from '../../services/localisation-service';
 import { MatDialog } from '@angular/material/dialog';
 import { BarDialog } from '../bar-dialog/bar-dialog';
+import { Bar } from '../../models/bar';
+import { BarForm } from '../../models/barForm';
 
 @Component({
   selector: 'app-bar-map',
@@ -181,10 +183,12 @@ export class BarMapComponent implements AfterViewInit, OnDestroy {
       });
 
       dialogRef.afterClosed().subscribe((result: BarForm | undefined) => {
-        if (result?.modifyMode) {
-          this.modify_bar.emit(result);
-        } else {
-          this.delete_bar.emit(result?.id);
+        if (result) {
+          if (result.modifyMode) {
+            this.modify_bar.emit(result);
+          } else {
+            this.delete_bar.emit(result.id);
+          }
         }
       });
     }

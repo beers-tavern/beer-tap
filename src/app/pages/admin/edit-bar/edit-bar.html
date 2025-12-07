@@ -1,0 +1,181 @@
+<div class="edit-bar-container">
+  <div class="edit-bar-card">
+    <div class="header">
+      <h1>Modifier le bar</h1>
+      <button type="button" class="btn-back" (click)="onCancel()">
+        ← Retour
+      </button>
+    </div>
+
+    @if (isLoading() && !bar()) {
+      <div class="loading">Chargement du bar...</div>
+    }
+
+    @if (bar()) {
+      <form [formGroup]="barForm" (ngSubmit)="onSubmit()">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="name">Nom du bar *</label>
+            <input 
+              id="name" 
+              type="text" 
+              formControlName="name"
+              [class.error]="getControl('name')?.invalid && getControl('name')?.touched"
+            />
+            @if (getControl('name')?.invalid && getControl('name')?.touched) {
+              <span class="error-message">
+                @if (getControl('name')?.errors?.['required']) {
+                  Le nom est requis
+                }
+                @if (getControl('name')?.errors?.['minlength']) {
+                  Le nom doit contenir au moins 2 caractères
+                }
+              </span>
+            }
+          </div>
+
+          <div class="form-group">
+            <label for="status">Statut *</label>
+            <select id="status" formControlName="status">
+              <option value="Ouvert">Ouvert</option>
+              <option value="Fermé">Fermé</option>
+              <option value="Temporairement fermé">Temporairement fermé</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="address">Adresse *</label>
+          <input 
+            id="address" 
+            type="text" 
+            formControlName="address"
+            [class.error]="getControl('address')?.invalid && getControl('address')?.touched"
+          />
+          @if (getControl('address')?.invalid && getControl('address')?.touched) {
+            <span class="error-message">L'adresse est requise</span>
+          }
+        </div>
+
+        <div class="form-group">
+          <label for="description">Description *</label>
+          <textarea 
+            id="description" 
+            formControlName="description"
+            rows="4"
+            [class.error]="getControl('description')?.invalid && getControl('description')?.touched"
+          ></textarea>
+          @if (getControl('description')?.invalid && getControl('description')?.touched) {
+            <span class="error-message">
+              La description doit contenir au moins 10 caractères
+            </span>
+          }
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="phone">Téléphone *</label>
+            <input 
+              id="phone" 
+              type="tel" 
+              formControlName="phone"
+              [class.error]="getControl('phone')?.invalid && getControl('phone')?.touched"
+            />
+            @if (getControl('phone')?.invalid && getControl('phone')?.touched) {
+              <span class="error-message">Le téléphone est requis</span>
+            }
+          </div>
+
+          <div class="form-group">
+            <label for="openingHours">Horaires *</label>
+            <input 
+              id="openingHours" 
+              type="text" 
+              formControlName="openingHours"
+              [class.error]="getControl('openingHours')?.invalid && getControl('openingHours')?.touched"
+            />
+            @if (getControl('openingHours')?.invalid && getControl('openingHours')?.touched) {
+              <span class="error-message">Les horaires sont requis</span>
+            }
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="latitude">Latitude *</label>
+            <input 
+              id="latitude" 
+              type="number" 
+              step="0.000001"
+              formControlName="latitude"
+              [class.error]="getControl('latitude')?.invalid && getControl('latitude')?.touched"
+            />
+            @if (getControl('latitude')?.invalid && getControl('latitude')?.touched) {
+              <span class="error-message">Latitude invalide</span>
+            }
+          </div>
+
+          <div class="form-group">
+            <label for="longitude">Longitude *</label>
+            <input 
+              id="longitude" 
+              type="number" 
+              step="0.000001"
+              formControlName="longitude"
+              [class.error]="getControl('longitude')?.invalid && getControl('longitude')?.touched"
+            />
+            @if (getControl('longitude')?.invalid && getControl('longitude')?.touched) {
+              <span class="error-message">Longitude invalide</span>
+            }
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="rating">Note (0-5)</label>
+          <input 
+            id="rating" 
+            type="number" 
+            step="0.1"
+            min="0"
+            max="5"
+            formControlName="rating"
+          />
+        </div>
+
+        @if (errorMessage()) {
+          <div class="alert alert-error">
+            {{ errorMessage() }}
+          </div>
+        }
+
+        @if (successMessage()) {
+          <div class="alert alert-success">
+            {{ successMessage() }}
+          </div>
+        }
+
+        <div class="form-actions">
+          <button 
+            type="button" 
+            class="btn btn-secondary"
+            (click)="onCancel()"
+            [disabled]="isLoading()"
+          >
+            Annuler
+          </button>
+          <button 
+            type="submit" 
+            class="btn btn-primary"
+            [disabled]="isLoading() || barForm.invalid"
+          >
+            @if (isLoading()) {
+              Modification en cours...
+            } @else {
+              Enregistrer les modifications
+            }
+          </button>
+        </div>
+      </form>
+    }
+  </div>
+</div>

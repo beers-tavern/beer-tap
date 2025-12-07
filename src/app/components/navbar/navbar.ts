@@ -13,6 +13,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { BarCard } from '../bar-card/bar-card';
 import { MatInputModule } from '@angular/material/input';
 import { MatCard, MatCardModule } from '@angular/material/card';
+import { Bar } from '../../models/bar';
 
 @Component({
   selector: 'app-navbar',

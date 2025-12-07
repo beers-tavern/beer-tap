@@ -1,0 +1,183 @@
+<div class="add-bar-container">
+  <div class="add-bar-card">
+    <div class="header">
+      <h1>Ajouter un nouveau bar</h1>
+      <button type="button" class="btn-back" (click)="onCancel()">
+        ← Retour
+      </button>
+    </div>
+
+    <form [formGroup]="barForm" (ngSubmit)="onSubmit()">
+      <div class="form-row">
+        <div class="form-group">
+          <label for="name">Nom du bar *</label>
+          <input 
+            id="name" 
+            type="text" 
+            formControlName="name"
+            placeholder="Le Bistrot Parisien"
+            [class.error]="getControl('name')?.invalid && getControl('name')?.touched"
+          />
+          @if (getControl('name')?.invalid && getControl('name')?.touched) {
+            <span class="error-message">
+              @if (getControl('name')?.errors?.['required']) {
+                Le nom est requis
+              }
+              @if (getControl('name')?.errors?.['minlength']) {
+                Le nom doit contenir au moins 2 caractères
+              }
+            </span>
+          }
+        </div>
+
+        <div class="form-group">
+          <label for="status">Statut *</label>
+          <select id="status" formControlName="status">
+            <option value="Ouvert">Ouvert</option>
+            <option value="Fermé">Fermé</option>
+            <option value="Temporairement fermé">Temporairement fermé</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="address">Adresse *</label>
+        <input 
+          id="address" 
+          type="text" 
+          formControlName="address"
+          placeholder="123 Rue de la Bière, 75001 Paris"
+          [class.error]="getControl('address')?.invalid && getControl('address')?.touched"
+        />
+        @if (getControl('address')?.invalid && getControl('address')?.touched) {
+          <span class="error-message">L'adresse est requise</span>
+        }
+      </div>
+
+      <div class="form-group">
+        <label for="description">Description *</label>
+        <textarea 
+          id="description" 
+          formControlName="description"
+          placeholder="Décrivez l'ambiance, les spécialités, etc."
+          rows="4"
+          [class.error]="getControl('description')?.invalid && getControl('description')?.touched"
+        ></textarea>
+        @if (getControl('description')?.invalid && getControl('description')?.touched) {
+          <span class="error-message">
+            La description doit contenir au moins 10 caractères
+          </span>
+        }
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="phone">Téléphone *</label>
+          <input 
+            id="phone" 
+            type="tel" 
+            formControlName="phone"
+            placeholder="+33 1 23 45 67 89"
+            [class.error]="getControl('phone')?.invalid && getControl('phone')?.touched"
+          />
+          @if (getControl('phone')?.invalid && getControl('phone')?.touched) {
+            <span class="error-message">Le téléphone est requis</span>
+          }
+        </div>
+
+        <div class="form-group">
+          <label for="openingHours">Horaires *</label>
+          <input 
+            id="openingHours" 
+            type="text" 
+            formControlName="openingHours"
+            placeholder="10h-2h"
+            [class.error]="getControl('openingHours')?.invalid && getControl('openingHours')?.touched"
+          />
+          @if (getControl('openingHours')?.invalid && getControl('openingHours')?.touched) {
+            <span class="error-message">Les horaires sont requis</span>
+          }
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="latitude">Latitude *</label>
+          <input 
+            id="latitude" 
+            type="number" 
+            step="0.000001"
+            formControlName="latitude"
+            placeholder="48.856614"
+            [class.error]="getControl('latitude')?.invalid && getControl('latitude')?.touched"
+          />
+          @if (getControl('latitude')?.invalid && getControl('latitude')?.touched) {
+            <span class="error-message">Latitude invalide (ex: 48.856614)</span>
+          }
+        </div>
+
+        <div class="form-group">
+          <label for="longitude">Longitude *</label>
+          <input 
+            id="longitude" 
+            type="number" 
+            step="0.000001"
+            formControlName="longitude"
+            placeholder="2.352222"
+            [class.error]="getControl('longitude')?.invalid && getControl('longitude')?.touched"
+          />
+          @if (getControl('longitude')?.invalid && getControl('longitude')?.touched) {
+            <span class="error-message">Longitude invalide (ex: 2.352222)</span>
+          }
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="rating">Note initiale (0-5)</label>
+        <input 
+          id="rating" 
+          type="number" 
+          step="0.1"
+          min="0"
+          max="5"
+          formControlName="rating"
+          placeholder="0"
+        />
+      </div>
+
+      @if (errorMessage()) {
+        <div class="alert alert-error">
+          {{ errorMessage() }}
+        </div>
+      }
+
+      @if (successMessage()) {
+        <div class="alert alert-success">
+          {{ successMessage() }}
+        </div>
+      }
+
+      <div class="form-actions">
+        <button 
+          type="button" 
+          class="btn btn-secondary"
+          (click)="onCancel()"
+          [disabled]="isLoading()"
+        >
+          Annuler
+        </button>
+        <button 
+          type="submit" 
+          class="btn btn-primary"
+          [disabled]="isLoading() || barForm.invalid"
+        >
+          @if (isLoading()) {
+            Création en cours...
+          } @else {
+            Créer le bar
+          }
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

@@ -8,6 +8,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { PopUpFormBarData } from '../../models/pop-up-form-bar-data';
+import { BarForm } from '../../models/barForm';
 
 @Component({
   selector: 'app-pop-up-form-bar',
@@ -63,13 +65,14 @@ export class PopUpFormBarComponent implements OnInit{
   formMapper(form:FormGroup<any>): BarForm {
     const value = form.value;
     return {
-      id : this.data.bar ? this.data.bar.id : undefined,
+      id : this.data.bar ? parseInt(this.data.bar.id) : 0,
       name : value.name,
       category : value.category,
       status : value.status,
       address: value.address,
       lat : value.lat,
-      lng : value.lng
+      lng : value.lng,
+      modifyMode: this.data.bar ? true : false
     } as BarForm
   }
 }
