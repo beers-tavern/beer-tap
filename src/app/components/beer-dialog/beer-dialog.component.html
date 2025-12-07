@@ -1,0 +1,15 @@
+<h2 mat-dialog-title>{{ data.name }}</h2>
+
+<mat-dialog-content>
+  <img [src]="data.image" alt="{{ data.name }}" class="beer-img"/>
+
+  <p>{{ data.description }}</p>
+
+  <p><strong>Degré :</strong> {{ data.degree }}</p>
+
+  <p><strong>Indice d'amertume (IBU) :</strong> {{ data.ibu }}</p>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-raised-button color="primary" (click)="close()">Fermer</button>
+</mat-dialog-actions>
