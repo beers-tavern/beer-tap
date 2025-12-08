@@ -2,6 +2,7 @@
 .bar-body-container {
   scrollbar-width: thin;
   scrollbar-color: var(--app-orange, #edaf05) var(--app-black, #1a1a1a);
+  user-select: none;
 }
 
 .bar-body-container::-webkit-scrollbar {
@@ -47,6 +48,7 @@
   display: flex;
   align-items: center;
   gap: 0.75rem;
+  user-select: none;
 }
 
 .bar-title-container p {

@@ -5,7 +5,7 @@
     <div class="info-card">
       <div class="info-content cursor-pointer" (click)="openBarDialog()">
         <button class="close-btn" (click)="closeInfo()">×</button>
-        <img [src]="selected_bar()?.image" [alt]="selected_bar()?.name" class="info-image" />
+        <img [src]="selected_bar()?.image" [alt]="selected_bar()?.name" class="info-image" draggable="false" />
         <div class="info-details">
           <h3>{{ selected_bar()?.name }}</h3>
           <p class="category">{{ selected_bar()?.category }}</p>

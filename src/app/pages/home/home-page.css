@@ -58,6 +58,7 @@
   display: block;
   color: #ffffff;
   text-shadow: 0 4px 20px rgba(255, 255, 255, 0.2);
+  user-select: none;
 }
 
 .title-tavern {
@@ -67,6 +68,7 @@
   -webkit-text-fill-color: transparent;
   background-clip: text;
   text-shadow: 0 4px 20px rgba(237, 175, 5, 0.4);
+  user-select: none;
 }
 
 /* Slogan */
@@ -77,6 +79,7 @@
   font-weight: 300;
   letter-spacing: 1px;
   animation: fadeIn 1s ease-out 0.3s backwards;
+  user-select: none;
 }
 
 /* Boutons CTA */
@@ -102,6 +105,7 @@
   text-transform: uppercase;
   letter-spacing: 1px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  user-select: none;
 }
 
 .cta-btn.primary {
@@ -143,6 +147,7 @@
   flex-wrap: wrap;
   gap: 2rem;
   animation: fadeInUp 1s ease-out 0.7s backwards;
+  user-select: none;
 }
 
 .feature-item {

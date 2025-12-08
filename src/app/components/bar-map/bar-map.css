@@ -49,6 +49,7 @@
   position: relative;
   max-width: 600px;
   margin: 0 auto;
+  user-select: none;
 }
 
 .close-btn {

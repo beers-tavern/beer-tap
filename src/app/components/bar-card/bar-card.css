@@ -3,6 +3,8 @@
   padding: 0;
   overflow-y: hidden;
   border-radius: 0px;
+  user-select: none;
+  cursor: pointer;
 }
 
 .bar-card:hover {

@@ -1,9 +1,16 @@
-<header class="bg-[var(--app-bg)] border border-gray-800 text-white px-6 py-5">
+<header class="bg-[var(--app-bg)] border border-gray-800 text-white px-6 py-5 select-none">
   <div class="flex items-center justify-between">
     <!-- Section gauche avec l'icône et le texte -->
     <div class="flex items-center space-x-3">
       <div class="bg-amber-500 p-2 rounded-lg flex items-center justify-center">
-        <img src="./assets/beer-icon.svg" alt="Beer logo" class="w-6 h-6" />
+        <a
+        draggable="false"
+        routerLink="/"
+        routerLinkActive="bg-amber-500 text-[var(--app-black)]"
+        [routerLinkActiveOptions]="{ exact: false }"
+      >
+        <img draggable="false" src="./assets/beer-icon.svg" alt="Beer logo" class="w-6 h-6" />
+        </a>
       </div>
       <div>
         <h1 class="text-base font-medium leading-tight">Beers Tavern</h1>
@@ -16,12 +23,13 @@
     <!-- Navigation centrale -->
     <nav class="flex space-x-2">
       <a
+        draggable="false"
         routerLink="/bars"
         routerLinkActive="bg-amber-500 text-[var(--app-black)]"
         [routerLinkActiveOptions]="{ exact: false }"
         class="flex items-center space-x-2 px-4 py-2 rounded-lg transition hover:bg-gray-800"
       >
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <svg draggable="false" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <path d="M3 20h18"></path>
           <path d="M5 20v-6"></path>
           <path d="M19 20v-6"></path>
@@ -33,12 +41,13 @@
       </a>
       
       <a
+        draggable="false"
         routerLink="/beers"
         routerLinkActive="bg-amber-500 text-[var(--app-black)]"
         [routerLinkActiveOptions]="{ exact: false }"
         class="flex items-center space-x-2 px-4 py-2 rounded-lg transition hover:bg-gray-800"
       >
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <svg draggable="false" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <path d="M17 11h1a3 3 0 0 1 0 6h-1"></path>
           <path d="M9 12v6"></path>
           <path d="M13 12v6"></path>
@@ -50,12 +59,13 @@
 
       @if (authService.isAuthenticated()) {
         <a
+        draggable="false"
         routerLink="/achievements"
         routerLinkActive="bg-amber-500 text-[var(--app-black)]"
         [routerLinkActiveOptions]="{ exact: false }"
         class="flex items-center space-x-2 px-4 py-2 rounded-lg transition hover:bg-gray-800"
       >
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <svg draggable="false" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <circle cx="12" cy="8" r="6"></circle>
           <path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"></path>
         </svg>
@@ -94,12 +104,14 @@
         </button>
       } @else {
         <a
+        draggable="false"
           routerLink="/login"
           class="bg-blue-500 p-3 rounded-lg flex items-center justify-center hover:bg-blue-600 transition text-white font-medium text-sm px-4"
         >
           Connexion
         </a>
         <a
+        draggable="false"
           routerLink="/register"
           class="bg-green-500 p-3 rounded-lg flex items-center justify-center hover:bg-green-600 transition text-white font-medium text-sm px-4"
         >

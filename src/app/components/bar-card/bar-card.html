@@ -1,6 +1,6 @@
 <mat-card class="bar-card">
   <div class="card-content border border-gray-800" [class]="selected ? 'selected' : ''" (click)="select_bar.emit(bar)">
-    <img [src]="bar.image" [alt]="bar.name" class="bar-image" />
+    <img [src]="bar.image" [alt]="bar.name" class="bar-image" draggable="false" />
 
     <div class="bar-info">
       <div class="bar-header">

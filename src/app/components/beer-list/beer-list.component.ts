@@ -16,7 +16,7 @@ export class BeerListComponent {
   searchTerm = signal<string>('');
 
   // Signal pour toutes les bières depuis le service
-  allBeers = this.beerService.getBeers();
+  allBeers = this.beerService.beers;
 
   // Computed signal pour filtrer les bières
   filteredBeers = computed(() => {
